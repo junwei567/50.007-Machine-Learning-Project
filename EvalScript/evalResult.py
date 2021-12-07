@@ -4,7 +4,7 @@ from copy import copy
 from collections import defaultdict
 from optparse import OptionParser
 
-#Read entities from predcition
+#Read entities from prediction
 def get_predicted(predicted, answers=defaultdict(lambda: defaultdict(defaultdict))):
 
     example = 0
@@ -216,14 +216,14 @@ def compare_observed_to_predicted(observed, predicted):
 
 ##############Main Function##################
 
-if len(sys.argv) < 3:
-    print ('Please make sure you have installed Python 3.4 or above!')
-    print ("Usage on Windows:  python evalResult.py gold predictions")
-    print ("Usage on Linux/Mac:  python3 evalResult.py gold predictions")
-    sys.exit()
+# if len(sys.argv) < 3:
+#     print ('Please make sure you have installed Python 3.4 or above!')
+#     print ("Usage on Windows:  python evalResult.py gold predictions")
+#     print ("Usage on Linux/Mac:  python3 evalResult.py gold predictions")
+#     sys.exit()
 
-gold = open(sys.argv[1], "r", encoding='UTF-8')
-prediction = open(sys.argv[2], "r", encoding='UTF-8')
+# gold = open(sys.argv[1], "r", encoding='UTF-8')
+# prediction = open(sys.argv[2], "r", encoding='UTF-8')
 
 #column separator
 separator = ' '
@@ -231,11 +231,11 @@ separator = ' '
 #the column index for tags
 outputColumnIndex = 1
 #Read Gold data
-observed = get_observed(gold)
+# observed = get_observed(gold)
 
-#Read Predction data
-predicted = get_predicted(prediction)
+# #Read Predction data
+# predicted = get_predicted(prediction)
 
-#Compare
-compare_observed_to_predicted(observed, predicted)
+# #Compare
+# compare_observed_to_predicted(observed, predicted)
 
