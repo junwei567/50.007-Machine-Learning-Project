@@ -4,6 +4,8 @@ Ang Song Gee 1004589
 Lim Jun Wei 1004379
 Dharmapuri Krishna Sathvik 1004286
 
+## Instructions
+
 Use Python3 to run with files
 
 Example:
@@ -19,3 +21,9 @@ The team implemented 2 designs for Part 4:
 1. part4.py uses the Add-One smoothing / Laplace smoothing design
 
 2. part4b.py uses the trigram HMM design
+
+* Take note that the scripts may take more than a minute to run.
+
+## Results
+
+All outputs are in their respective folders, ES and RU, for part 1 to part 4.
