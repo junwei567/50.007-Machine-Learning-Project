@@ -3,10 +3,14 @@ from constants import (
     ES_TEST_DATA_FILE,
     ES_ACTUAL_DATA_FILE,
     ES_PART4_PREDICTED_DATA_FILE,
+    ES_PART4_TEST_DATA_FILE,
+    ES_PART4_PREDICTED_TEST_DATA_FILE,
     RU_TRAIN_DATA_FILE,
     RU_TEST_DATA_FILE,
     RU_ACTUAL_DATA_FILE,
     RU_PART4_PREDICTED_DATA_FILE,
+    RU_PART4_TEST_DATA_FILE,
+    RU_PART4_PREDICTED_TEST_DATA_FILE,
     START_TAG,
     STOP_TAG,
     UNK_WORD,
@@ -127,7 +131,6 @@ def generate_viterbi_values(
         except ValueError:
             continue
 
-        # print(f'n: {n}, current_tag: {current_tag}, tag: {tag}, value: {value}')
         current_max_viterbi_value = max(current_max_viterbi_value, value)
 
     viterbi_values[(n, current_tag)] = current_max_viterbi_value
@@ -243,7 +246,7 @@ if __name__ == "__main__":
         RU_unique_tags, RU_transition_pair_count, RU_tags_with_start_stop
     )
 
-    # Run and output Viterbi for ES
+    # Run and output Viterbi for ES dev dataset
     ES_predicted_tags_list = []
     for word in ES_test_words:
         viterbi_values = {}
@@ -263,7 +266,7 @@ if __name__ == "__main__":
         ES_PART4_PREDICTED_DATA_FILE, ES_test_words, ES_predicted_tags_list
     )
 
-    # Run and output Viterbi for RU
+    # Run and output Viterbi for RU dev dataset
     RU_predicted_tags_list = []
     for word in RU_test_words:
         viterbi_values = {}
@@ -283,8 +286,52 @@ if __name__ == "__main__":
         RU_PART4_PREDICTED_DATA_FILE, RU_test_words, RU_predicted_tags_list
     )
 
-    print("\nResults for ES dataset")
+    print("\nResults for ES dev dataset")
     evaluateScores(ES_ACTUAL_DATA_FILE, ES_PART4_PREDICTED_DATA_FILE)
 
-    print("\nResults for RU dataset")
+    print("\nResults for RU dev dataset")
     evaluateScores(RU_ACTUAL_DATA_FILE, RU_PART4_PREDICTED_DATA_FILE)
+
+    # Run model on test.in files for ES and RU
+    ES_part4_test_words = _preprocess_test_file2(ES_PART4_TEST_DATA_FILE)
+    RU_part4_test_words = _preprocess_test_file2(RU_PART4_TEST_DATA_FILE)
+
+    # Run and output Viterbi for ES test dataset
+    ES_predicted_tags_list = []
+    for word in ES_part4_test_words:
+        viterbi_values = {}
+        start_viterbi(
+            word,
+            ES_unique_words,
+            ES_unique_tags,
+            ES_emission_parameters,
+            ES_transition_parameters,
+        )
+        ES_generated_tag_list = generate_predictions_viterbi(
+            word, ES_unique_tags, ES_transition_parameters
+        )
+        ES_predicted_tags_list.append(ES_generated_tag_list)
+
+    write_to_predicted_file(
+        ES_PART4_PREDICTED_TEST_DATA_FILE, ES_part4_test_words, ES_predicted_tags_list
+    )
+
+    # Run and output Viterbi for RU test dataset
+    RU_predicted_tags_list = []
+    for word in RU_part4_test_words:
+        viterbi_values = {}
+        start_viterbi(
+            word,
+            RU_unique_words,
+            RU_unique_tags,
+            RU_emission_parameters,
+            RU_transition_parameters,
+        )
+        RU_generated_tag_list = generate_predictions_viterbi(
+            word, RU_unique_tags, RU_transition_parameters
+        )
+        RU_predicted_tags_list.append(RU_generated_tag_list)
+
+    write_to_predicted_file(
+        RU_PART4_PREDICTED_TEST_DATA_FILE, RU_part4_test_words, RU_predicted_tags_list
+    )
